@@ -36,19 +36,24 @@ const TodoList = () => {
   const handleToggleCompleted = (id) => {
     const updatedTodos = todos.map((todo) => {
       if (todo.id === id) {
-        const newTodo = {
+        return {
           ...todo,
           completed: !todo.completed,
         };
-
-        return newTodo;
-      } else {
-        return todo;
       }
+
+      return todo;
     });
 
     setTodos(updatedTodos);
   };
+
+  // const handleToggleCompleted = (id) =>
+  //   setTodos((todos) =>
+  //     todos.map((todo) =>
+  //       todo.id === id ? { ...todo, completed: !todo.completed } : todo
+  //     )
+  //   );
 
   return (
     <div>
