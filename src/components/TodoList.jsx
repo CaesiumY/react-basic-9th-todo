@@ -37,37 +37,21 @@ const TodoList = () => {
   };
 
   const handleToggleCompleted = (id) => {
-    const updatedTodos = todos.map((todo) => {
-      if (todo.id === id) {
-        return {
-          ...todo,
-          completed: !todo.completed,
-        };
-      }
-
-      return todo;
-    });
-
-    setTodos(updatedTodos);
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) =>
+        todo.id === id
+          ? {
+              ...todo,
+              completed: !todo.completed,
+            }
+          : todo
+      )
+    );
   };
 
-  // const handleToggleCompleted = (id) =>
-  //   setTodos((todos) =>
-  //     todos.map((todo) =>
-  //       todo.id === id ? { ...todo, completed: !todo.completed } : todo
-  //     )
-  //   );
-
   const handleDelete = (id) => {
-    const filteredTodos = todos.filter((todo) => {
-      if (todo.id === id) {
-        return false;
-      }
-
-      return true;
-    });
-
-    setTodos(filteredTodos);
+    // todo.id가 내가 찾는 id와 같지 않을 때 true를 반환하여 그대로 남겨둠
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
 
   return (
