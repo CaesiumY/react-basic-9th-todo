@@ -1,10 +1,4 @@
-const TodoItem = ({
-  completed,
-  text,
-  handleToggleCompleted,
-  handleDelete,
-  id,
-}) => {
+const TodoItem = ({ completed, text, toggleTodoCompleted, deleteTodo, id }) => {
   return (
     <li>
       <p
@@ -16,11 +10,11 @@ const TodoItem = ({
       </p>
 
       <div>
-        <button onClick={() => handleToggleCompleted(id)}>
+        <button onClick={() => toggleTodoCompleted(id)}>
           {completed ? "취소하기" : "완료하기"}
         </button>
 
-        <button onClick={() => handleDelete(id)}>삭제하기</button>
+        <button onClick={() => deleteTodo(id)}>삭제하기</button>
       </div>
     </li>
   );
