@@ -39,6 +39,7 @@ const TodoForm = ({ addTodos }) => {
 const TodoFormWrapper = styled.form`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: 0.5rem;
 `;
 
@@ -48,7 +49,7 @@ const TodoFormInput = styled.input`
   border: 1px solid #ccc;
   border-radius: 0.5rem;
   background-color: white;
-  flex: 1;
+  flex: 8;
 
   &::placeholder {
     color: #aaa;
@@ -60,6 +61,9 @@ const TodoFormInput = styled.input`
   }
 `;
 
-const SubmitButton = styled(ActionButton)``;
+const SubmitButton = styled(ActionButton)`
+  flex: 1;
+  text-align: center;
+`;
 
 export default TodoForm;
