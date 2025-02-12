@@ -1,13 +1,16 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import { TodoContext } from "../../context/TodoContext";
+import { Link } from "react-router";
 
 const TodoItem = ({ completed, text, id }) => {
   const { toggleTodoCompleted, deleteTodo } = useContext(TodoContext);
 
   return (
     <TodoItemWrapper>
-      <TodoItemText $completed={completed}>{text}</TodoItemText>
+      <TodoItemLink to={`/todos/${id}`} $completed={completed}>
+        {text}
+      </TodoItemLink>
 
       <TodoItemActions>
         <ActionButton
@@ -38,9 +41,13 @@ const TodoItemWrapper = styled.li`
   gap: 1rem;
 `;
 
-const TodoItemText = styled.p`
+const TodoItemLink = styled(Link)`
   text-decoration: ${({ $completed }) =>
     $completed ? "line-through" : "none"};
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const TodoItemActions = styled.div`
