@@ -65,6 +65,7 @@ export const ActionButton = styled.button`
   border-radius: 0.5rem;
   cursor: pointer;
   word-break: keep-all;
+  text-align: center;
 
   &:hover {
     opacity: 0.8;
