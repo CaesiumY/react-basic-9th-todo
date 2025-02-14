@@ -5,22 +5,10 @@ import { TodoContext } from "../../context/TodoContext";
 import { useSearchParams } from "react-router";
 
 const TodoList = () => {
-  const { todos } = useContext(TodoContext);
+  const { getFilteredTodos } = useContext(TodoContext);
   const [searchParams] = useSearchParams();
 
   const selectedFilter = searchParams.get("filter");
-
-  const getFilteredTodos = (selectedFilter) => {
-    if (selectedFilter === "completed") {
-      return todos.filter((todo) => todo.completed);
-    }
-
-    if (selectedFilter === "pending") {
-      return todos.filter((todo) => !todo.completed);
-    }
-
-    return todos;
-  };
 
   const filteredTodos = getFilteredTodos(selectedFilter);
 
