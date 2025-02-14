@@ -2,13 +2,17 @@ import { FileCheck, LaptopMinimal, Video } from "lucide-react";
 import { useContext } from "react";
 import styled from "styled-components";
 import { TodoContext } from "../../context/TodoContext";
+import { Link, useSearchParams } from "react-router";
 
 const TodoDashboard = () => {
   const { todos } = useContext(TodoContext);
+  const [searchParams] = useSearchParams();
 
   const all = todos.length;
   const completed = todos.filter((todo) => todo.completed).length;
   const pending = all - completed;
+
+  const selectedFilter = searchParams.get("filter");
 
   return (
     <TodoDashboardSection>
@@ -16,7 +20,7 @@ const TodoDashboard = () => {
 
       <TodoDashboardCardList>
         <TodoDashboardCardWrapper $flex={2}>
-          <TodoDashboardCard>
+          <TodoDashboardCard to="/" $selected={!selectedFilter}>
             <div>
               <FileCheck />
             </div>
@@ -26,7 +30,11 @@ const TodoDashboard = () => {
           </TodoDashboardCard>
         </TodoDashboardCardWrapper>
         <TodoDashboardCardWrapper>
-          <TodoDashboardCard $bgColor="#582be6">
+          <TodoDashboardCard
+            to="?filter=completed"
+            $bgColor="#582be6"
+            $selected={selectedFilter === "completed"}
+          >
             <div>
               <LaptopMinimal />
             </div>
@@ -36,7 +44,11 @@ const TodoDashboard = () => {
           </TodoDashboardCard>
         </TodoDashboardCardWrapper>
         <TodoDashboardCardWrapper>
-          <TodoDashboardCard $bgColor="#242424">
+          <TodoDashboardCard
+            to="?filter=pending"
+            $bgColor="#242424"
+            $selected={selectedFilter === "pending"}
+          >
             <div>
               <Video />
             </div>
@@ -72,7 +84,7 @@ const TodoDashboardCardWrapper = styled.li`
   flex: ${({ $flex = 1 }) => $flex};
 `;
 
-const TodoDashboardCard = styled.button`
+const TodoDashboardCard = styled(Link)`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -83,6 +95,7 @@ const TodoDashboardCard = styled.button`
   padding: 1.25rem;
   border-radius: 1rem;
   cursor: pointer;
+  text-decoration: ${({ $selected }) => ($selected ? "underline" : "none")};
 `;
 
 const TodoDashboardCardContent = styled.p`
