@@ -1,30 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TodoContext } from "../../context/TodoContext";
-import { SAMPLE_TODOS } from "../../constants/sample-todos";
+import { supabase } from "../../lib/supabaseClient";
+
+const TODO_TABLE = "todos";
 
 const TodoProvider = ({ children }) => {
-  const [todos, setTodos] = useState(SAMPLE_TODOS);
+  const [todos, setTodos] = useState([]);
 
-  const addTodos = (text) => {
-    setTodos([{ id: crypto.randomUUID(), text, completed: false }, ...todos]);
+  const getTodos = async () => {
+    const { data } = await supabase.from(TODO_TABLE).select();
+
+    setTodos(data);
   };
 
-  const toggleTodoCompleted = (id) => {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) =>
-        todo.id === id
-          ? {
-              ...todo,
-              completed: !todo.completed,
-            }
-          : todo
-      )
-    );
+  const getTodoById = async (id) => {
+    const { data } = await supabase
+      .from(TODO_TABLE)
+      .select()
+      .eq("id", id)
+      .single();
+
+    return data;
   };
 
-  const deleteTodo = (id) => {
-    // todo.id가 내가 찾는 id와 같지 않을 때 true를 반환하여 그대로 남겨둠
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+  const addTodos = async (text) => {
+    await supabase.from(TODO_TABLE).insert({ text });
+
+    await getTodos(); // 새로운 todo를 추가하면 최신 데이터를 불러옴
+  };
+
+  const toggleTodoCompleted = async (id, currentCompleted) => {
+    await supabase
+      .from(TODO_TABLE)
+      .update({ completed: !currentCompleted })
+      .eq("id", id);
+
+    await getTodos();
+  };
+
+  const deleteTodo = async (id) => {
+    await supabase.from(TODO_TABLE).delete().eq("id", id);
+
+    await getTodos();
   };
 
   const getFilteredTodos = (selectedFilter) => {
@@ -39,6 +56,10 @@ const TodoProvider = ({ children }) => {
     return todos;
   };
 
+  useEffect(() => {
+    getTodos();
+  }, []);
+
   return (
     <TodoContext.Provider
       value={{
@@ -47,6 +68,7 @@ const TodoProvider = ({ children }) => {
         toggleTodoCompleted,
         deleteTodo,
         getFilteredTodos,
+        getTodoById,
       }}
     >
       {children}
