@@ -6,6 +6,7 @@ const TODO_TABLE = "todos";
 
 const TodoProvider = ({ children }) => {
   const [todos, setTodos] = useState([]);
+  const [currentTodo, setCurrentTodo] = useState(null);
 
   const getTodos = async () => {
     const { data } = await supabase.from(TODO_TABLE).select();
@@ -20,6 +21,7 @@ const TodoProvider = ({ children }) => {
       .eq("id", id)
       .single();
 
+    setCurrentTodo(data);
     return data;
   };
 
@@ -64,6 +66,7 @@ const TodoProvider = ({ children }) => {
     <TodoContext.Provider
       value={{
         todos,
+        currentTodo,
         addTodos,
         toggleTodoCompleted,
         deleteTodo,

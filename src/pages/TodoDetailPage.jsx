@@ -1,27 +1,24 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import styled from "styled-components";
 import TodoItem, { ActionButton } from "../components/todo/TodoItem";
 import { TodoContext } from "../context/TodoContext";
-import { useState } from "react";
 
 const TodoDetailPage = () => {
-  const [todo, setTodo] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { getTodoById } = useContext(TodoContext);
+  const { currentTodo, getTodoById } = useContext(TodoContext);
   const { id } = useParams();
 
   useEffect(() => {
-    const fetchTodo = async () => {
+    const fetchTodoItem = async () => {
       setIsLoading(true);
 
-      const todoItemData = await getTodoById(id);
-      setTodo(todoItemData);
+      await getTodoById(id);
 
       setIsLoading(false);
     };
 
-    fetchTodo();
+    fetchTodoItem();
   }, [id, getTodoById]);
 
   if (isLoading) {
@@ -30,8 +27,12 @@ const TodoDetailPage = () => {
 
   return (
     <DetailPageWrapper>
-      {todo ? (
-        <TodoItem id={todo.id} text={todo.text} completed={todo.completed} />
+      {currentTodo ? (
+        <TodoItem
+          id={currentTodo.id}
+          text={currentTodo.text}
+          completed={currentTodo.completed}
+        />
       ) : (
         <p>해당하는 데이터를 찾을 수 없습니다.</p>
       )}
