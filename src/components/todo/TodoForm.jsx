@@ -1,12 +1,16 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { addTodos } from "../../api/todo-api";
 import { ActionButton } from "./TodoItem";
 
 const TodoForm = () => {
+  const queryClient = useQueryClient();
   const { mutate: addTodoMutate } = useMutation({
     mutationFn: addTodos,
+    onSettled: () => {
+      return queryClient.invalidateQueries(["todos"]);
+    },
   });
 
   const [todoText, setTodoText] = useState("");
