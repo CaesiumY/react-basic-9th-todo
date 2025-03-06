@@ -1,12 +1,21 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { combine, persist } from "zustand/middleware";
+
+type Theme = "light" | "dark";
+
+interface InitialState {
+  theme: Theme;
+}
+
+const initialState: InitialState = {
+  theme: "light",
+};
 
 export const useThemeStore = create(
   persist(
-    (set) => ({
-      theme: "light",
-      setTheme: (theme) => set({ theme }),
-    }),
+    combine(initialState, (set) => ({
+      setTheme: (theme: Theme) => set({ theme }),
+    })),
     {
       name: "theme-storage",
     }
