@@ -1,4 +1,3 @@
-import { deleteTodo } from "@/api/todo-api";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -15,6 +14,12 @@ interface TodoDeleteButtonProps {
 }
 
 const TodoDeleteButton = ({ id }: TodoDeleteButtonProps) => {
+  const handleDelete = async () => {
+    await fetch(`/api/todos/${id}`, {
+      method: "DELETE",
+    });
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -26,7 +31,7 @@ const TodoDeleteButton = ({ id }: TodoDeleteButtonProps) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>취소</AlertDialogCancel>
-          <Button variant="destructive" onClick={() => deleteTodo(id)}>
+          <Button variant="destructive" onClick={handleDelete}>
             삭제
           </Button>
         </AlertDialogFooter>

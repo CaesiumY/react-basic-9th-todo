@@ -1,6 +1,5 @@
 "use client";
 
-import { createTodo } from "@/api/todo-api";
 import { FormEvent } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -13,7 +12,10 @@ const TodoForm = () => {
     const formData = new FormData(form);
     const todoText = formData.get("todo-text") as string;
 
-    await createTodo(todoText);
+    await fetch("/api/todos", {
+      method: "POST",
+      body: JSON.stringify({ text: todoText }),
+    });
 
     form.reset();
   };
