@@ -1,10 +1,8 @@
 import { FilterType } from "@/store/useTodoFilterStore";
-import { Todo } from "@/types/todo.type";
+import { Supabase, Todo } from "@/types/todo.type";
 import { createClient } from "@/utils/supabase/client";
 
-export const getTodos = async (filter?: FilterType) => {
-  const supabase = createClient();
-
+export const getTodos = async (supabase: Supabase, filter?: FilterType) => {
   const todoQuery = supabase
     .from("todos")
     .select()
@@ -23,9 +21,7 @@ export const getTodos = async (filter?: FilterType) => {
   return data;
 };
 
-export const getTodoItem = async (id: Todo["id"]) => {
-  const supabase = createClient();
-
+export const getTodoItem = async (supabase: Supabase, id: Todo["id"]) => {
   const { data, error } = await supabase
     .from("todos")
     .select()
