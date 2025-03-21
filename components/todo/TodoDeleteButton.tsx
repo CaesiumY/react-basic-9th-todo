@@ -13,9 +13,10 @@ import {
 } from "../ui/alert-dialog";
 import { Button } from "../ui/button";
 import { useDeleteTodoMutation } from "@/query/useTodoMutation";
+import { Todo } from "@/types/todo.type";
 
 interface TodoDeleteButtonProps {
-  id: string;
+  id: Todo["id"];
 }
 
 const TodoDeleteButton = ({ id }: TodoDeleteButtonProps) => {

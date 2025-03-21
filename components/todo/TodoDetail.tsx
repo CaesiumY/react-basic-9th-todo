@@ -3,9 +3,10 @@
 import { useTodoItemQuery } from "@/query/useTodoQuery";
 import TodoItem from "./TodoItem";
 import LoadingIndicator from "../LoadingIndicator";
+import { Todo } from "@/types/todo.type";
 
 interface TodoDetailProps {
-  id: string;
+  id: Todo["id"];
 }
 
 const TodoDetail = ({ id }: TodoDetailProps) => {

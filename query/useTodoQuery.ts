@@ -1,5 +1,6 @@
 import { getTodoItem, getTodos } from "@/api/todo-api";
 import { FilterType } from "@/store/useTodoFilterStore";
+import { Todo } from "@/types/todo.type";
 import { useQuery } from "@tanstack/react-query";
 
 export const useTodosQuery = (filter: FilterType) => {
@@ -9,7 +10,7 @@ export const useTodosQuery = (filter: FilterType) => {
   });
 };
 
-export const useTodoItemQuery = (id: string) => {
+export const useTodoItemQuery = (id: Todo["id"]) => {
   return useQuery({
     queryKey: ["todos", id],
     queryFn: () => getTodoItem(id),

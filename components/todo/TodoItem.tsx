@@ -15,7 +15,7 @@ interface TodoItemProps {
 
 const TodoItem = ({ todo }: TodoItemProps) => {
   const { mutate: toggleTodoCompleted } = useToggleTodoMutation();
-  const { completed, id, text } = todo;
+  const { completed, id, title } = todo;
   const checkboxId = useId();
 
   const onCheckedChange = (checked: CheckedState) => {
@@ -38,7 +38,7 @@ const TodoItem = ({ todo }: TodoItemProps) => {
             "line-through": completed,
           })}
         >
-          <h2>{text}</h2>
+          <h2>{title}</h2>
         </Link>
       </div>
 

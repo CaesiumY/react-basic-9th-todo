@@ -1,4 +1,3 @@
-import { getTodos } from "@/api/todo-api";
 import TodoFilterSwitch from "@/components/todo/TodoFilterSwitch";
 import TodoForm from "@/components/todo/TodoForm";
 import TodoList from "@/components/todo/TodoList";
@@ -12,15 +11,15 @@ import React from "react";
 const HomePage = async () => {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery({
-    queryKey: ["todos", "all"],
-    queryFn: () => getTodos(),
-  });
+  // await queryClient.prefetchQuery({
+  //   queryKey: ["todos", "all"],
+  //   queryFn: () => getTodos(),
+  // });
 
-  await queryClient.prefetchQuery({
-    queryKey: ["todos", "completed"],
-    queryFn: () => getTodos("completed"),
-  });
+  // await queryClient.prefetchQuery({
+  //   queryKey: ["todos", "completed"],
+  //   queryFn: () => getTodos("completed"),
+  // });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
