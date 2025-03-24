@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { signOut } from "@/app/(auth)/action";
+import Link from "next/link";
 
 export function UserAction() {
   return (
@@ -29,10 +30,12 @@ export function UserAction() {
         sideOffset={4}
       >
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <UserCircleIcon />
-            My Page
-          </DropdownMenuItem>
+          <Link href="/mypage">
+            <DropdownMenuItem>
+              <UserCircleIcon />
+              My Page
+            </DropdownMenuItem>
+          </Link>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => signOut()}>
