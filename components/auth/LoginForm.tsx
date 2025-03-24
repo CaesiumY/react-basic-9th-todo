@@ -32,6 +32,7 @@ export function LoginForm({
                 <Input
                   id="email"
                   type="email"
+                  name="email"
                   placeholder="m@example.com"
                   required
                 />
@@ -43,6 +44,7 @@ export function LoginForm({
                 <Input
                   id="password"
                   type="password"
+                  name="password"
                   placeholder="Enter your password"
                   required
                 />

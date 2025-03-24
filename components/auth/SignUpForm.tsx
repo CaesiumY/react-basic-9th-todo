@@ -32,6 +32,7 @@ export function SignUpForm({
                 <Input
                   id="email"
                   type="email"
+                  name="email"
                   placeholder="m@example.com"
                   required
                 />
@@ -43,6 +44,7 @@ export function SignUpForm({
                 <Input
                   id="password"
                   type="password"
+                  name="password"
                   placeholder="Enter your password"
                   required
                 />
@@ -54,6 +56,7 @@ export function SignUpForm({
                 <Input
                   id="username"
                   type="text"
+                  name="fullName"
                   placeholder="Enter your username"
                   required
                 />
