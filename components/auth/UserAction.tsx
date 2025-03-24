@@ -11,6 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { signOut } from "@/app/(auth)/action";
 
 export function UserAction() {
   return (
@@ -34,7 +35,7 @@ export function UserAction() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => signOut()}>
           <LogOutIcon />
           Log out
         </DropdownMenuItem>
