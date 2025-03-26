@@ -31,6 +31,47 @@ export const getTodos = async (supabase: Supabase, filter?: FilterType) => {
   return data;
 };
 
+export const getTodosByUserId = async (
+  supabase: Supabase,
+  filter?: FilterType
+) => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  const userId = user.id;
+
+  const todoQuery = supabase
+    .from("todos")
+    .select(
+      `
+      id,
+      title,
+      completed,
+      created_at,
+      author(*)
+      `
+    )
+    .eq("author", userId)
+    .order("created_at", { ascending: false });
+
+  if (filter === "completed") {
+    todoQuery.eq("completed", true);
+  }
+
+  const { data, error } = await todoQuery;
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+};
+
 export type TodoItemWithAuthor = Awaited<ReturnType<typeof getTodoItem>>;
 
 export const getTodoItem = async (supabase: Supabase, id: Todo["id"]) => {

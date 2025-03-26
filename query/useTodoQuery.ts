@@ -1,4 +1,4 @@
-import { getTodoItem, getTodos } from "@/api/todo-api";
+import { getTodoItem, getTodos, getTodosByUserId } from "@/api/todo-api";
 import { FilterType } from "@/store/useTodoFilterStore";
 import { Todo } from "@/types/todo.type";
 import { createClient } from "@/utils/supabase/client";
@@ -10,6 +10,15 @@ export const useTodosQuery = (filter: FilterType) => {
   return useQuery({
     queryKey: ["todos", filter],
     queryFn: () => getTodos(supabaseClient, filter),
+  });
+};
+
+export const useUserTodosQuery = (filter: FilterType) => {
+  const supabaseClient = createClient();
+
+  return useQuery({
+    queryKey: ["todos", "user", filter],
+    queryFn: () => getTodosByUserId(supabaseClient, filter),
   });
 };
 
