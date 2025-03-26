@@ -62,5 +62,5 @@ export const signOut = async () => {
   }
 
   revalidatePath("/", "layout");
-  redirect("/login");
+  redirect("/auth/login");
 };

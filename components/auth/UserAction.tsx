@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { signOut } from "@/app/(auth)/action";
+import { signOut } from "@/app/auth/action";
 import Link from "next/link";
 
 export function UserAction() {
