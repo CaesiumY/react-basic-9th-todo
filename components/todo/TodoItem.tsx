@@ -1,8 +1,8 @@
 "use client";
 
+import { TodoWithAuthor } from "@/api/todo-api";
 import { cn } from "@/lib/utils";
 import { useToggleTodoMutation } from "@/query/useTodoMutation";
-import { Todo } from "@/types/todo.type";
 import { CheckedState } from "@radix-ui/react-checkbox";
 import Link from "next/link";
 import { useId } from "react";
@@ -10,12 +10,12 @@ import { Checkbox } from "../ui/checkbox";
 import TodoDeleteButton from "./TodoDeleteButton";
 
 interface TodoItemProps {
-  todo: Todo;
+  todo: TodoWithAuthor;
 }
 
 const TodoItem = ({ todo }: TodoItemProps) => {
   const { mutate: toggleTodoCompleted } = useToggleTodoMutation();
-  const { completed, id, title } = todo;
+  const { completed, id, title, author } = todo;
   const checkboxId = useId();
 
   const onCheckedChange = (checked: CheckedState) => {
@@ -38,7 +38,9 @@ const TodoItem = ({ todo }: TodoItemProps) => {
             "line-through": completed,
           })}
         >
-          <h2>{title}</h2>
+          <h2>
+            {title} ({author?.full_name ?? "익명"})
+          </h2>
         </Link>
       </div>
 

@@ -38,30 +38,30 @@ export type Database = {
       }
       todos: {
         Row: {
+          author: string | null
           completed: boolean
           created_at: string
           id: number
           title: string
-          user_id: string | null
         }
         Insert: {
+          author?: string | null
           completed?: boolean
           created_at?: string
           id?: number
           title: string
-          user_id?: string | null
         }
         Update: {
+          author?: string | null
           completed?: boolean
           created_at?: string
           id?: number
           title?: string
-          user_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "todos_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: "todos_author_fkey"
+            columns: ["author"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]

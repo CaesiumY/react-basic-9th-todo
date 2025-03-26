@@ -2,10 +2,20 @@ import { FilterType } from "@/store/useTodoFilterStore";
 import { Supabase, Todo } from "@/types/todo.type";
 import { createClient } from "@/utils/supabase/client";
 
+export type TodoWithAuthor = Awaited<ReturnType<typeof getTodos>>[number];
+
 export const getTodos = async (supabase: Supabase, filter?: FilterType) => {
   const todoQuery = supabase
     .from("todos")
-    .select()
+    .select(
+      `
+      id,
+      title,
+      completed,
+      created_at,
+      author(*)
+      `
+    )
     .order("created_at", { ascending: false });
 
   if (filter === "completed") {
@@ -21,10 +31,20 @@ export const getTodos = async (supabase: Supabase, filter?: FilterType) => {
   return data;
 };
 
+export type TodoItemWithAuthor = Awaited<ReturnType<typeof getTodoItem>>;
+
 export const getTodoItem = async (supabase: Supabase, id: Todo["id"]) => {
   const { data, error } = await supabase
     .from("todos")
-    .select()
+    .select(
+      `
+      id,
+      title,
+      completed,
+      created_at,
+      author(*)
+      `
+    )
     .eq("id", id)
     .single();
 
