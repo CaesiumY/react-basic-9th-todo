@@ -1,6 +1,7 @@
 import { createTodo, deleteTodo, toggleTodoCompleted } from "@/api/todo-api";
 import { Todo } from "@/types/todo.type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export const useCreateTodoMutation = () => {
@@ -21,11 +22,13 @@ export const useCreateTodoMutation = () => {
 
 export const useDeleteTodoMutation = () => {
   const queryClient = useQueryClient();
+  const { replace } = useRouter();
 
   return useMutation({
     mutationFn: deleteTodo,
     onSuccess: () => {
       toast.success("할 일이 삭제되었습니다.");
+      replace("/");
     },
     onSettled: async () => {
       return await queryClient.invalidateQueries({
